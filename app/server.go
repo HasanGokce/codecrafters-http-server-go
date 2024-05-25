@@ -85,7 +85,7 @@ func handleConnection(conn net.Conn) {
 		}
 
 		conn.Write([]byte("HTTP/1.1 200 OK\r\n"))
-		conn.Write([]byte("Content-Type: application/octet-stream\r\n"))
+		conn.Write([]byte("Content-Type: application/octet-stream\r\n\r\n"))
 
 		return
 	}
