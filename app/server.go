@@ -262,6 +262,9 @@ func handleFiles(req *Request, res *Response) {
 
 	directory := os.Args[2]
 
+	fmt.Println("Directory: ", directory)
+	fmt.Println("Filename: ", filename)
+
 	// Write the content to a file
 	file, err := os.Create(directory + filename)
 	if err != nil {
