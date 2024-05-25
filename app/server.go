@@ -98,7 +98,8 @@ func handleConnection(conn net.Conn) {
 			writer.Write(bodyBuffer)
 			bytes := buffer.Bytes()
 			fmt.Println(bytes)
-			conn.Write(bytes)
+			hex := fmt.Sprintf("%x", bytes)
+			conn.Write([]byte(hex))
 			return
 		} else {
 			conn.Write([]byte(secondPath))
