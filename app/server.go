@@ -209,6 +209,7 @@ func main() {
 	app.get("/productlist", handleProductList)
 	app.get("/productlist/apple", handleApple)
 	app.post("/echo/:id", handleEcho)
+	app.get("/echo/:id", handleEcho)
 
 	select {}
 }
