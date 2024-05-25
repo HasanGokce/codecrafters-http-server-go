@@ -1,8 +1,6 @@
 package main
 
 import (
-	"bytes"
-	"compress/gzip"
 	"fmt"
 	"net"
 	"os"
@@ -91,16 +89,9 @@ func handleConnection(conn net.Conn) {
 
 		if hasCompress {
 
-			buffer := new(bytes.Buffer)
-			writer := gzip.NewWriter(buffer)
-			defer writer.Close()
-			writer.Write(bodyBuffer)
-			writer.Close()
-			bytes := buffer.Bytes()
-			fmt.Println(bytes)
-			hex := fmt.Sprintf("%x", bytes)
-			conn.Write([]byte(hex))
-			return
+			compressedString := GzipCompress(echo)
+			fmt.Println("compressedString: " + compressedString)
+			conn.Write([]byte(compressedString))
 		} else {
 			conn.Write([]byte(secondPath))
 			return
