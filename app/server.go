@@ -13,6 +13,7 @@ func main() {
 		os.Exit(1)
 	}
 
+	var conn net.Conn
 	conn, err = l.Accept()
 	if err != nil {
 		fmt.Println("Error accepting connection: ", err.Error())
