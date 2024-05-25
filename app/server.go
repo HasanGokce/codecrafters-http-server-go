@@ -326,9 +326,10 @@ func handleGetFiles(req *Request, res *Response) {
 	}
 
 	// Write the content to the response body
+	createdBody := string(createBody)
 
 	res.StatusCode = 200
 	res.Headers["Content-Type"] = "application/octet-stream"
-	res.Headers["Content-Length"] = fmt.Sprintf("%d", len(fileName))
-	res.Body = string(createBody)
+	res.Headers["Content-Length"] = fmt.Sprintf("%d", len(createdBody))
+	res.Body = createdBody
 }
