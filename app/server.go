@@ -320,6 +320,6 @@ func handleGetFiles(req *Request, res *Response) {
 
 	res.StatusCode = 200
 	res.Headers["Content-Type"] = "application/octet-stream"
-	res.Headers["Content-Length"] = fmt.Sprintf("%d", len(req.Body))
+	res.Headers["Content-Length"] = fmt.Sprintf("%d", len(res.Body))
 	res.Body = fmt.Sprintf("File content: %s", req.Body)
 }
