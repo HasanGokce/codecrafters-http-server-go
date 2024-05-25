@@ -36,7 +36,20 @@ func main() {
 
 	rawRequest := string(buffer[:resultBuffer])
 
-	fmt.Println(rawRequest)
+	lines := strings.Split(rawRequest, "\r")
+
+	headers := make(map[string]string)
+
+	for _, line := range lines {
+		splittedLine := strings.Split(line, ": ")
+
+		if len(splittedLine) == 2 {
+			headers[splittedLine[0]] = splittedLine[1]
+		}
+
+	}
+
+	fmt.Println(headers)
 
 	path := strings.Split(rawRequest, " ")[1]
 
@@ -46,19 +59,27 @@ func main() {
 
 	fmt.Println(len(splittedPath))
 
+	responseContentLength := 0
+
 	if path == "/" {
 		conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
 		return
 	}
 
-	if len(splittedPath) < 3 {
-		conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
+	if path == "/user-agent" {
+		responseContentLength = len(headers["User-Agent"])
+		responseContentLengthString := fmt.Sprint(responseContentLength)
+		conn.Write([]byte("HTTP/1.1 200 OK\r\n"))
+		conn.Write([]byte("Content-Type: text/plain\r\n"))
+		conn.Write([]byte("Content-Length: " + responseContentLengthString + "\r\n\r\n"))
+		conn.Write([]byte(headers["User-Agent"]))
 		return
 	}
 
-	secondPath := splittedPath[2]
-
-	fmt.Println(secondPath)
+	if len(splittedPath) > 2 {
+		conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
+		return
+	}
 
 	if !strings.HasPrefix(path, "/echo/") {
 		conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
@@ -66,6 +87,8 @@ func main() {
 	}
 
 	if strings.HasPrefix(path, "/echo/") {
+		secondPath := splittedPath[2]
+
 		conn.Write([]byte("HTTP/1.1 200 OK\r\n"))
 		conn.Write([]byte("Content-Type: text/plain\r\n"))
 		conn.Write([]byte("Content-Length: " + fmt.Sprint(len(secondPath)) + "\r\n\r\n"))
