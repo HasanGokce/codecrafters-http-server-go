@@ -78,7 +78,7 @@ func handleConnection(conn net.Conn) {
 
 	fmt.Println("POST")
 	fmt.Println(splittedPath)
-	if strings.HasPrefix(path, "/files") && requestType == "POST" {
+	if strings.HasPrefix(path, "/files/") && requestType == "POST" {
 
 		fileName := splittedPath[2]
 		directory := os.Args[2]
@@ -111,7 +111,7 @@ func handleConnection(conn net.Conn) {
 		directory := os.Args[2]
 
 		file, err := os.ReadFile(directory + fileName)
-		conn.Write(file)
+
 		if err != nil {
 			conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
 			return
