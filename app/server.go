@@ -35,7 +35,7 @@ func main() {
 	path := strings.Split(rawRequest, " ")[1]
 
 	// /index.html handler
-	if path == "/index.html" {
+	if path == "/" {
 		conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
 		conn.Write([]byte("<html><body><h1>Hello, World!</h1></body></html>"))
 		return
