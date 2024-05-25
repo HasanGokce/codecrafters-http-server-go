@@ -83,6 +83,11 @@ func main() {
 		return
 	}
 
+	if len(splittedPath) > 2 {
+		conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
+		return
+	}
+
 	if strings.HasPrefix(path, "/echo/") {
 		secondPath := splittedPath[2]
 
