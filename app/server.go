@@ -263,7 +263,7 @@ func handleFiles(req *Request, res *Response) {
 	directory := os.Args[2]
 
 	// Write the content to a file
-	file, err := os.Create(directory + "/" + filename)
+	file, err := os.Create(directory + filename)
 	if err != nil {
 		res.StatusCode = 500
 		res.Headers["Content-Type"] = "text/plain"
