@@ -210,6 +210,7 @@ func main() {
 	app.get("/productlist/apple", handleApple)
 	app.post("/echo/:id", handleEcho)
 	app.get("/echo/:id", handleEcho)
+	app.post("/files/:content", handleFiles)
 
 	select {}
 }
@@ -247,4 +248,12 @@ func handleEcho(req *Request, res *Response) {
 		fmt.Println("Two")
 		res.Body = fmt.Sprintf("Echo ID: %s", id)
 	}
+}
+
+func handleFiles(req *Request, res *Response) {
+	content := req.Params["content"]
+
+	res.StatusCode = 201
+	res.Headers["Content-Type"] = "text/plain"
+	res.Body = fmt.Sprintf("File content: %s", content)
 }
