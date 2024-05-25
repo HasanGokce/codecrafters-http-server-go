@@ -84,10 +84,10 @@ func handleConnection(conn net.Conn) {
 
 		if hasCompress {
 			compressedString := GzipCompress(echo)
-			fmt.Println("compressedString Final: " + compressedString)
-			fmt.Println("compressedString Final: " + compressedString)
-			fmt.Println("compressedString Final: " + compressedString)
-			fmt.Println("compressedString Finals")
+			fmt.Println("compressedString Final: " + compressedString + "\r\n")
+			fmt.Println("compressedString Final: " + compressedString + "\r\n")
+			fmt.Println("compressedString Final: " + compressedString + "\r\n")
+			fmt.Println("compressedString Final: " + compressedString + "\r\n")
 
 			conn.Write([]byte("Content-Length: " + fmt.Sprint(len(compressedString)) + "\r\n\r\n"))
 			conn.Write([]byte(compressedString))
