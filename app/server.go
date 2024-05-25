@@ -42,6 +42,8 @@ func main() {
 
 	splittedPath := strings.Split(path, "/")
 
+	fmt.Println(path)
+
 	fmt.Println(len(splittedPath))
 
 	if len(splittedPath) < 2 {
