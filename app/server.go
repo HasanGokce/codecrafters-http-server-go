@@ -235,7 +235,7 @@ func main() {
 	app.post("/echo/:id", handleEcho)
 	app.get("/echo/:id", handleEcho)
 	app.post("/files/:content", handleFiles)
-	app.get("/files/:content", handleFiles)
+	app.get("/files/:content", handleGetFiles)
 
 	select {}
 }
@@ -281,10 +281,29 @@ func handleFiles(req *Request, res *Response) {
 
 	directory := os.Args[2]
 
-	fmt.Println("Directory: ", directory)
-	fmt.Println("Filename: ", fileName)
+	// Write the content to a file
+	file, err := os.Create(directory + fileName)
+	if err != nil {
+		fmt.Println("Error creating file: ", err.Error())
+		res.StatusCode = 500
+		res.Headers["Content-Type"] = "text/plain"
+		res.Body = "Error creating file"
+		return
+	}
+	// Write body to the content
+	file.Write([]byte(req.Body))
+	defer file.Close()
 
-	fmt.Println("content: ", req.Body)
+	res.StatusCode = 201
+	res.Headers["Content-Type"] = "text/plain"
+	res.Body = fmt.Sprintf("File content: %s", req.Body)
+}
+
+func handleGetFiles(req *Request, res *Response) {
+	// We will create a new file and write the content a file from cli --directory flag
+	fileName := req.Params["content"]
+
+	directory := os.Args[2]
 
 	// Write the content to a file
 	file, err := os.Create(directory + fileName)
