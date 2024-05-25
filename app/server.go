@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"compress/gzip"
 	"fmt"
 	"net"
 	"os"
@@ -69,13 +71,31 @@ func handleConnection(conn net.Conn) {
 	if strings.HasPrefix(path, "/echo") {
 		secondPath := splittedPath[2]
 
+		hasCompress := headers["Accept-Encoding"] != "" && strings.Contains(headers["Accept-Encoding"], "gzip")
+
 		fmt.Println((headers))
 		conn.Write([]byte("HTTP/1.1 200 OK\r\n"))
 		conn.Write([]byte("Content-Type: text/plain\r\n"))
-		if headers["Accept-Encoding"] != "" && strings.Contains(headers["Accept-Encoding"], "gzip") {
+		if hasCompress {
 			conn.Write([]byte("Content-Encoding: gzip\r\n"))
 		}
 		conn.Write([]byte("Content-Length: " + fmt.Sprint(len(secondPath)) + "\r\n\r\n"))
+
+		if hasCompress {
+			var b bytes.Buffer
+			gz := gzip.NewWriter(&b)
+			if _, err := gz.Write([]byte(secondPath)); err != nil {
+				fmt.Println("Error compressing: ", err.Error())
+				os.Exit(1)
+			}
+			if err := gz.Close(); err != nil {
+				fmt.Println("Error closing compress: ", err.Error())
+				os.Exit(1)
+			}
+			conn.Write(b.Bytes())
+			return
+		}
+
 		conn.Write([]byte(secondPath))
 		return
 	}
