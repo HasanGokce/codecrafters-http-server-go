@@ -1,0 +1,41 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"net"
+	"strings"
+)
+
+func mains() {
+	port := 4221
+	listener, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
+	if err != nil {
+		fmt.Println("Error starting server:", err)
+		return
+	}
+	defer listener.Close()
+
+	fmt.Printf("Server started at port %d\n", port)
+
+	for {
+		conn, err := listener.Accept()
+		if err != nil {
+			fmt.Println("Error accepting connection:", err)
+			continue
+		}
+		go handleConnection(conn)
+	}
+}
+
+
+
+func handleProductList(conn net.Conn) {
+	response := "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nProduct List: [Product1, Product2, Product3]"
+	conn.Write([]byte(response))
+}
+
+func handleApple(conn net.Conn) {
+	response := "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nProduct: Apple"
+	conn.Write([]byte(response))
+}

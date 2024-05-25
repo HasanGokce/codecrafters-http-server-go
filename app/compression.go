@@ -12,3 +12,4 @@ func GzipCompress(text string) string {
 	w.Close()
 	return b.String()
 }
+
