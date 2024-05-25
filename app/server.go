@@ -257,9 +257,22 @@ func handleEcho(req *Request, res *Response) {
 }
 
 func handleFiles(req *Request, res *Response) {
-	content := req.Params["content"]
+	// We will create a new file and write the content a file from cli --directory flag
+	filename := req.Params["content"]
+
+	directory := os.Args[2]
+
+	// Write the content to a file
+	file, err := os.Create(directory + "/" + filename)
+	if err != nil {
+		res.StatusCode = 500
+		res.Headers["Content-Type"] = "text/plain"
+		res.Body = "Error creating file"
+		return
+	}
+	defer file.Close()
 
 	res.StatusCode = 201
 	res.Headers["Content-Type"] = "text/plain"
-	res.Body = fmt.Sprintf("File content: %s", content)
+	res.Body = fmt.Sprintf("File content: %s", req.Body)
 }
