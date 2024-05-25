@@ -266,7 +266,7 @@ func handleFiles(req *Request, res *Response) {
 	fmt.Println("Filename: ", fileName)
 
 	// Write the content to a file
-	file, err := os.Create("/tmp/data/codecrafters.io/http-server-tester/abc.txt")
+	file, err := os.Create(directory + fileName)
 	if err != nil {
 		fmt.Println("Error creating file: ", err.Error())
 		res.StatusCode = 500
