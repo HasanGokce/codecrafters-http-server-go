@@ -240,6 +240,7 @@ func handleEcho(req *Request, res *Response) {
 		// Compress the response body
 		res.Body = GzipCompress(id)
 		res.Headers["Content-Encoding"] = "gzip"
+		res.Headers["Content-Length"] = fmt.Sprintf("%d", len(res.Body))
 	} else {
 		res.Body = fmt.Sprintf("Echo ID: %s", id)
 	}
