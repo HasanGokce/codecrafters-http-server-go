@@ -315,11 +315,11 @@ func handleGetFiles(req *Request, res *Response) {
 		return
 	}
 
-	osFileToSting := bufio.NewReader(file)
-	fileContent, err := osFileToSting.ReadString('\n')
+	createBody := make([]byte, 1024)
+	_, err = file.Read(createBody)
 	if err != nil {
-		fmt.Println("Error reading fileb: ", err.Error())
-		res.StatusCode = 404
+		fmt.Println("Error reading file: ", err.Error())
+		res.StatusCode = 500
 		res.Headers["Content-Type"] = "text/plain"
 		res.Body = "Error reading file"
 		return
@@ -330,5 +330,5 @@ func handleGetFiles(req *Request, res *Response) {
 	res.StatusCode = 200
 	res.Headers["Content-Type"] = "application/octet-stream"
 	res.Headers["Content-Length"] = fmt.Sprintf("%d", len(fileName))
-	res.Body = fileContent
+	res.Body = string(createBody)
 }
