@@ -75,15 +75,14 @@ func handleConnection(conn net.Conn) {
 	}
 
 	if strings.HasPrefix(path, "/files/") {
-		secondPath := splittedPath[2]
+		fileName := splittedPath[2]
+		directory := os.Args[2]
 
-		file, err := os.Open(secondPath)
+		_, err := os.ReadFile(directory + fileName)
 		if err != nil {
 			conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
 			return
 		}
-
-		fmt.Println("File: " + file.Name())
 
 		conn.Write([]byte("HTTP/1.1 200 OK\r\n"))
 		conn.Write([]byte("Content-Type: application/octet-stream\r\n"))
