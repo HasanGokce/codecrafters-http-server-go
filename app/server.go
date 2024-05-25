@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func getHeaders(rawRequest string, conn net.Conn) map[string]string {
+func getHeaders(rawRequest string) map[string]string {
 	lines := strings.Split(rawRequest, "\r\n")
 
 	headers := make(map[string]string)
@@ -28,24 +28,7 @@ func getHeaders(rawRequest string, conn net.Conn) map[string]string {
 	return headers
 }
 
-func main() {
-	l, err := net.Listen("tcp", "0.0.0.0:4221")
-	if err != nil {
-		fmt.Println("Failed to bind to port... 4221")
-		os.Exit(1)
-	}
-
-	var conn net.Conn
-	conn, err = l.Accept()
-	if err != nil {
-		fmt.Println("Error accepting connection: ", err.Error())
-		os.Exit(1)
-	}
-
-	// Get remote address (IP and port)
-	remoteAddr := conn.RemoteAddr()
-	fmt.Println("Connection from:", remoteAddr)
-
+func handleConnection(conn net.Conn) {
 	// Buffer to store incoming data
 	buffer := make([]byte, 1024)
 
@@ -57,7 +40,7 @@ func main() {
 
 	rawRequest := string(buffer[:resultBuffer])
 
-	headers := getHeaders(rawRequest, conn)
+	headers := getHeaders(rawRequest)
 
 	path := strings.Split(rawRequest, " ")[1]
 
@@ -100,5 +83,24 @@ func main() {
 
 	conn.Write([]byte("HTTP/1.1 200 OK\r\n"))
 	conn.Write([]byte("Content-Type: text/plain\r\n\r\n"))
+}
+
+func main() {
+	l, err := net.Listen("tcp", "0.0.0.0:4221")
+	if err != nil {
+		fmt.Println("Failed to bind to port... 4221")
+		os.Exit(1)
+	}
+
+	for {
+		var conn net.Conn
+		conn, err = l.Accept()
+		if err != nil {
+			fmt.Println("Error accepting connection: ", err.Error())
+			os.Exit(1)
+		}
+
+		go handleConnection(conn)
+	}
 
 }
