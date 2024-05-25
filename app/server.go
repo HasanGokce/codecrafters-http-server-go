@@ -56,7 +56,7 @@ func main() {
 	fmt.Println(secondPath)
 
 	if path == "/" {
-		conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
+		conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
 		return
 	}
 
