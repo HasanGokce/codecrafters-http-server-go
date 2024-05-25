@@ -300,26 +300,24 @@ func handleFiles(req *Request, res *Response) {
 }
 
 func handleGetFiles(req *Request, res *Response) {
-	// We will create a new file and write the content a file from cli --directory flag
+	// Read a file and add to the response body
 	fileName := req.Params["content"]
 
 	directory := os.Args[2]
 
-	// Write the content to a file
-	file, err := os.Create(directory + fileName)
+	// Read the content of the file
+	file, err := os.Open(directory + fileName)
 	if err != nil {
-		fmt.Println("Error creating file: ", err.Error())
-		res.StatusCode = 500
+		fmt.Println("Error reading file: ", err.Error())
+		res.StatusCode = 404
 		res.Headers["Content-Type"] = "text/plain"
-		res.Body = "Error creating file"
+		res.Body = "Error reading file"
 		return
 	}
-	// Write body to the content
-	file.Write([]byte(req.Body))
 	defer file.Close()
 
 	res.StatusCode = 200
 	res.Headers["Content-Type"] = "application/octet-stream"
 	res.Headers["Content-Length"] = fmt.Sprintf("%d", len(fileName))
-	res.Body = fmt.Sprintf("File content: %s", req.Body)
+	res.Body = req.Body
 }
