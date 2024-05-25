@@ -94,10 +94,14 @@ func handleConnection(conn net.Conn) {
 		file.Write([]byte(body))
 		file.Close()
 
+		fmt.Println("File created")
+
 		conn.Write([]byte("HTTP/1.1 201 Created\r\n"))
 		conn.Write([]byte("Content-Type: text/plain\r\n"))
 		conn.Write([]byte("Content-Length: " + fmt.Sprint(len(body)) + "\r\n\r\n"))
 		conn.Write([]byte(body))
+
+		fmt.Println(body)
 
 		return
 	}
