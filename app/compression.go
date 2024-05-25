@@ -3,14 +3,12 @@ package main
 import (
 	"bytes"
 	"compress/gzip"
-	"fmt"
 )
 
-func GzipCompress(text string) string {
-	fmt.Println("Text: " + text)
+func GzipCompress(text *string) string {
 	buffer := new(bytes.Buffer)
 	writer := gzip.NewWriter(buffer)
-	writer.Write([]byte(text))
+	writer.Write([]byte(*text))
 	writer.Close()
 	resultString := buffer.String()
 	return resultString
