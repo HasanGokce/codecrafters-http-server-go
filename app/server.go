@@ -82,7 +82,7 @@ func handleConnection(conn net.Conn) {
 		conn.Write([]byte("Content-Length: " + fmt.Sprint(len(secondPath)) + "\r\n\r\n"))
 
 		body := rawRequest[strings.Index(rawRequest, "\r\n\r\n")+4:]
-		fmt.Println(body)
+		fmt.Println("bıdy: " + body)
 		bodyBuffer := []byte(body)
 
 		if hasCompress {
