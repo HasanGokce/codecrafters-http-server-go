@@ -10,5 +10,7 @@ func GzipCompress(text string) string {
 	writer := gzip.NewWriter(buffer)
 	writer.Write([]byte(text))
 	writer.Close()
-	return buffer.String()
+	resultString := buffer.String()
+	fmt
+	return resultString
 }
