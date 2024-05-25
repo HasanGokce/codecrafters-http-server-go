@@ -104,6 +104,23 @@ func (app *App) handleConnection(conn net.Conn) {
 		}
 	}
 
+	// Read the body if the method is POST
+	body := ""
+	if method == "POST" {
+		contentLength := 0
+		if cl, ok := headers["Content-Length"]; ok {
+			fmt.Sscanf(cl, "%d", &contentLength)
+		}
+
+		bodyBytes := make([]byte, contentLength)
+		_, err := reader.Read(bodyBytes)
+		if err != nil {
+			fmt.Println("Error reading request body: ", err.Error())
+			return
+		}
+		body = string(bodyBytes)
+	}
+
 	// Parse parameters from the path
 	params := make(map[string]string)
 	var handler func(*Request, *Response)
@@ -144,6 +161,7 @@ func (app *App) handleConnection(conn net.Conn) {
 		Path:    path,
 		Headers: headers,
 		Params:  params,
+		Body:    body,
 	}
 
 	// Create response object
