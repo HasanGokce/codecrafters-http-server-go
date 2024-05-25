@@ -180,9 +180,15 @@ func matchRoute(route, path string, params map[string]string) bool {
 
 // writeResponse function to send HTTP response
 func (app *App) writeResponse(conn net.Conn, response *Response) {
-	statusText := "OK"
-	if response.StatusCode != 200 && response.StatusCode != 201 {
+
+	var statusText string
+	if response.StatusCode == 200 {
+		statusText = "OK"
+	} else if response.StatusCode == 201 {
+		statusText = "Created"
+	} else {
 		statusText = "Not Found"
+
 	}
 
 	// Write status line
