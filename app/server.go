@@ -85,6 +85,8 @@ func handleConnection(conn net.Conn) {
 		fmt.Println("bıdy: " + body)
 		bodyBuffer := []byte(secondPath)
 
+		fmt.Println("bodyBuffer: " + string(bodyBuffer))
+
 		if hasCompress {
 
 			buffer := new(bytes.Buffer)
