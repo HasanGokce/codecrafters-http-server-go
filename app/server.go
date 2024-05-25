@@ -21,8 +21,12 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Get remote address (IP and port)
+	remoteAddr := conn.RemoteAddr()
+	fmt.Println("Connection from:", remoteAddr)
+
 	// Buffer to store incoming data
-	buffer := make([]byte, 102)
+	buffer := make([]byte, 1024)
 
 	resultBuffer, err := conn.Read(buffer)
 	if err != nil {
@@ -32,17 +36,17 @@ func main() {
 
 	rawRequest := string(buffer[:resultBuffer])
 
+	fmt.Println(rawRequest)
+
 	path := strings.Split(rawRequest, " ")[1]
 
-	// path handler
-	if path == "/" {
-		conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
-		conn.Write([]byte("<html><body><h1>Hello, World!</h1></body></html>"))
-		return
-	} else {
-		conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
-		conn.Write([]byte("<html><body><h1>404 Not Found</h1></body></html>"))
-		return
-	}
+	splittedPath := strings.Split(path, "/")
+
+	secondPath := splittedPath[2]
+
+	fmt.Println(secondPath)
+
+	conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
+	conn.Write([]byte(secondPath))
 
 }
