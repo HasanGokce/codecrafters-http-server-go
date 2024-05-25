@@ -266,7 +266,7 @@ func handleFiles(req *Request, res *Response) {
 	fmt.Println("Filename: ", fileName)
 
 	// Write the content to a file
-	file, err := os.Create(directory + fileName)
+	file, err := os.Create("abc.txt")
 	if err != nil {
 		res.StatusCode = 500
 		res.Headers["Content-Type"] = "text/plain"
