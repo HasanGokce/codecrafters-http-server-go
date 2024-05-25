@@ -22,7 +22,7 @@ func main() {
 	}
 
 	// Buffer to store incoming data
-	buffer := make([]byte, 1024)
+	buffer := make([]byte, 102)
 
 	resultBuffer, err := conn.Read(buffer)
 	if err != nil {
@@ -34,7 +34,7 @@ func main() {
 
 	path := strings.Split(rawRequest, " ")[1]
 
-	// /index.html handler
+	// path handler
 	if path == "/" {
 		conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
 		conn.Write([]byte("<html><body><h1>Hello, World!</h1></body></html>"))
