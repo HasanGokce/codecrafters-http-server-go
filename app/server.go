@@ -91,6 +91,7 @@ func handleConnection(conn net.Conn) {
 			writer.Close()
 			writer.Write(bodyBuffer)
 			conn.Write(buffer.Bytes())
+			fmt.Println("Compressed")
 			return
 		} else {
 			conn.Write([]byte(secondPath))
