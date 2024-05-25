@@ -87,7 +87,7 @@ func handleConnection(conn net.Conn) {
 		echo := strings.TrimPrefix(path, "/echo/") + "\r\n"
 		bodyBuffer := []byte(echo)
 
-		fmt.Println("bodyBuffer: " + string(bodyBuffer) + "\r\n")
+		fmt.Println("bodyBuffer: " + string(bodyBuffer))
 
 		if hasCompress {
 
