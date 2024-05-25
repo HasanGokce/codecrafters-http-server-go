@@ -299,7 +299,7 @@ func handleFiles(req *Request, res *Response) {
 	file.Write([]byte(req.Body))
 	defer file.Close()
 
-	res.StatusCode = 201
+	res.StatusCode = 200
 	res.Headers["Content-Type"] = "text/plain"
 	res.Body = fmt.Sprintf("File content: %s", req.Body)
 }
