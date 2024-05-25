@@ -81,23 +81,22 @@ func handleConnection(conn net.Conn) {
 		}
 		conn.Write([]byte("Content-Length: " + fmt.Sprint(len(secondPath)) + "\r\n\r\n"))
 
+		body := rawRequest[strings.Index(rawRequest, "\r\n\r\n")+4:]
+		bodyBuffer := []byte(body)
+
 		if hasCompress {
-			var b bytes.Buffer
-			gz := gzip.NewWriter(&b)
-			if _, err := gz.Write([]byte(secondPath)); err != nil {
-				fmt.Println("Error compressing: ", err.Error())
-				os.Exit(1)
-			}
-			if err := gz.Close(); err != nil {
-				fmt.Println("Error closing compress: ", err.Error())
-				os.Exit(1)
-			}
-			conn.Write(b.Bytes())
+
+			buffer := new(bytes.Buffer)
+			writer := gzip.NewWriter(buffer)
+			writer.Write(bodyBuffer)
+			writer.Close()
+			conn.Write(buffer.Bytes())
+			return
+		} else {
+			conn.Write([]byte(secondPath))
 			return
 		}
 
-		conn.Write([]byte(secondPath))
-		return
 	}
 
 	if strings.HasPrefix(path, "/files/") && requestType == "POST" {
