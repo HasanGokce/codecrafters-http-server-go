@@ -55,10 +55,6 @@ func main() {
 
 	splittedPath := strings.Split(path, "/")
 
-	fmt.Println(splittedPath)
-
-	fmt.Println(len(splittedPath))
-
 	responseContentLength := 0
 
 	if path == "/" {
@@ -67,6 +63,7 @@ func main() {
 	}
 
 	if path == "/user-agent" {
+		fmt.Println(headers["User-Agent"])
 		responseContentLength = len(headers["User-Agent"])
 		responseContentLengthString := fmt.Sprint(responseContentLength)
 		conn.Write([]byte("HTTP/1.1 200 OK\r\n"))
