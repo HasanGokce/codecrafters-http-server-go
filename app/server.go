@@ -2,20 +2,23 @@ package main
 
 import (
 	"fmt"
-	"net/http"
+	"net"
+	"os"
 )
 
 func main() {
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprintln(w, "HTTP/1.1 200 OK\r\n\r\n")
-
-	})
-
-	err := http.ListenAndServe(":4221", nil)
+	l, err := net.Listen("tcp", "0.0.0.0:4221")
 	if err != nil {
-		fmt.Println("Failed to start server on port 4221:", err)
+		fmt.Println("Failed to bind to port... 4221")
+		os.Exit(1)
 	}
+
+	conne, err = l.Accept()
+	if err != nil {
+		fmt.Println("Error accepting connection: ", err.Error())
+		os.Exit(1)
+	}
+
+	conne.Write([]byte("HTTP/1.1 200 OK\r\n"))
 
 }
