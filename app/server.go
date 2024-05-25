@@ -83,13 +83,14 @@ func handleConnection(conn net.Conn) {
 		fmt.Println("bıdy: " + body)
 
 		echo := strings.TrimPrefix(path, "/echo/")
-		fmt.Println("echo: " + echo)
+		fmt.Println("echo::" + echo)
 
 		if hasCompress {
 
 			compressedString := GzipCompress(echo)
 			fmt.Println("compressedString: " + compressedString)
 			conn.Write([]byte(compressedString))
+			return
 		} else {
 			conn.Write([]byte(secondPath))
 			return
