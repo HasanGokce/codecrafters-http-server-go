@@ -89,7 +89,9 @@ func handleConnection(conn net.Conn) {
 			return
 		}
 
-		file.Write([]byte(rawRequest))
+		body := strings.Split(rawRequest, "\r\n\r\n")[1]
+
+		file.Write([]byte(body))
 		file.Close()
 
 		conn.Write([]byte("HTTP/1.1 201 Created\r\n"))
