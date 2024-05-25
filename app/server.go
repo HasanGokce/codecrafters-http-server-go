@@ -36,11 +36,16 @@ func main() {
 
 	rawRequest := string(buffer[:resultBuffer])
 
-	lines := strings.Split(rawRequest, "\r")
+	lines := strings.Split(rawRequest, "\r\n")
 
 	headers := make(map[string]string)
 
 	for _, line := range lines {
+		fmt.Println("line: " + line)
+		if len(line) < 1 {
+			break
+		}
+
 		splittedLine := strings.Split(line, ": ")
 
 		if len(splittedLine) == 2 {
@@ -63,7 +68,7 @@ func main() {
 	}
 
 	if path == "/user-agent" {
-		fmt.Println(headers["User-Agent"])
+		fmt.Println("@" + headers["User-Agent"])
 		responseContentLength = len(headers["User-Agent"])
 		responseContentLengthString := fmt.Sprint(responseContentLength)
 		conn.Write([]byte("HTTP/1.1 200 OK\r\n"))
