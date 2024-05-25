@@ -270,6 +270,8 @@ func handleFiles(req *Request, res *Response) {
 		res.Body = "Error creating file"
 		return
 	}
+	// Write body to the content
+	file.WriteString(req.Body)
 	defer file.Close()
 
 	res.StatusCode = 201
