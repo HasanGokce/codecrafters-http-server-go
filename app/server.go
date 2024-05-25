@@ -235,6 +235,7 @@ func main() {
 	app.post("/echo/:id", handleEcho)
 	app.get("/echo/:id", handleEcho)
 	app.post("/files/:content", handleFiles)
+	app.get("/files/:content", handleFiles)
 
 	select {}
 }
