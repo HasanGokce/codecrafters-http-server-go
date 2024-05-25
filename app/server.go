@@ -79,19 +79,18 @@ func handleConnection(conn net.Conn) {
 		}
 		conn.Write([]byte("Content-Length: " + fmt.Sprint(len(secondPath)) + "\r\n\r\n"))
 
-		body := strings.Split(rawRequest, "\r\n\r\n")[1]
-		fmt.Println("bıdy: " + body)
-
 		echo := strings.TrimPrefix(path, "/echo/")
 		fmt.Println("echo::" + echo)
 
 		if hasCompress {
-
 			compressedString := GzipCompress(echo)
 			fmt.Println("compressedString: " + compressedString)
+
+			conn.Write([]byte("Content-Length: " + fmt.Sprint(len(compressedString)) + "\r\n\r\n"))
 			conn.Write([]byte(compressedString))
 			return
 		} else {
+			conn.Write([]byte("Content-Length: " + fmt.Sprint(len(secondPath)) + "\r\n\r\n"))
 			conn.Write([]byte(secondPath))
 			return
 		}
