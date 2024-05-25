@@ -319,6 +319,6 @@ func handleGetFiles(req *Request, res *Response) {
 	defer file.Close()
 
 	res.StatusCode = 200
-	res.Headers["Content-Type"] = "text/plain"
+	res.Headers["Content-Type"] = "application/octet-stream"
 	res.Body = fmt.Sprintf("File content: %s", req.Body)
 }
