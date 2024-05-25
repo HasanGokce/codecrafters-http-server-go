@@ -88,8 +88,8 @@ func handleConnection(conn net.Conn) {
 
 			buffer := new(bytes.Buffer)
 			writer := gzip.NewWriter(buffer)
-			writer.Write(bodyBuffer)
 			writer.Close()
+			writer.Write(bodyBuffer)
 			conn.Write(buffer.Bytes())
 			return
 		} else {
