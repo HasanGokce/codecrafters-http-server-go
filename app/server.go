@@ -66,13 +66,13 @@ func handleConnection(conn net.Conn) {
 		return
 	}
 
-	if strings.HasPrefix(path, "/echo/") {
+	if strings.HasPrefix(path, "/echo") {
 		secondPath := splittedPath[2]
 
 		fmt.Println((headers))
 		conn.Write([]byte("HTTP/1.1 200 OK\r\n"))
 		conn.Write([]byte("Content-Type: text/plain\r\n"))
-		if headers["Accept-Encoding"] != "" {
+		if headers["Accept-Encoding"] != "" && strings.Contains(headers["Accept-Encoding"], "gzip") {
 			conn.Write([]byte("Content-Encoding: gzip\r\n"))
 		}
 		conn.Write([]byte("Content-Length: " + fmt.Sprint(len(secondPath)) + "\r\n\r\n"))
