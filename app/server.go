@@ -90,7 +90,9 @@ func handleConnection(conn net.Conn) {
 			writer := gzip.NewWriter(buffer)
 			writer.Close()
 			writer.Write(bodyBuffer)
-			conn.Write(buffer.Bytes())
+			bytes := buffer.Bytes()
+			fmt.Println(bytes)
+			conn.Write(bytes)
 			fmt.Println("Compressed")
 			return
 		} else {
