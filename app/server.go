@@ -239,7 +239,6 @@ func handleEcho(req *Request, res *Response) {
 	if req.Headers["Accept-Encoding"] == "gzip" || req.Headers["Accept-Encoding"] != "" {
 		// Compress the response body
 		res.Body = GzipCompress(id)
-		res.Headers["Content-Encoding"] = "gzip"
 		res.Headers["Content-Length"] = fmt.Sprintf("%d", len(res.Body))
 		fmt.Println("One")
 	} else {
