@@ -78,7 +78,7 @@ func handleConnection(conn net.Conn) {
 		fileName := splittedPath[2]
 		directory := os.Args[2]
 
-		_, err := os.ReadFile(directory + fileName)
+		file, err := os.ReadFile(directory + fileName)
 		if err != nil {
 			conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
 			return
@@ -86,6 +86,7 @@ func handleConnection(conn net.Conn) {
 
 		conn.Write([]byte("HTTP/1.1 200 OK\r\n"))
 		conn.Write([]byte("Content-Type: application/octet-stream\r\n\r\n"))
+		conn.Write([]byte("Content-Length: " + fmt.Sprint(len(file)) + "\r\n\r\n"))
 
 		return
 	}
