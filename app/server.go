@@ -48,6 +48,7 @@ func main() {
 		conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
 		return
 	}
+	fmt.Println(splittedPath)
 
 	secondPath := splittedPath[2]
 
