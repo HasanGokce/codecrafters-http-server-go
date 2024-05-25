@@ -88,6 +88,8 @@ func handleConnection(conn net.Conn) {
 		conn.Write([]byte("Content-Type: application/octet-stream\r\n"))
 		conn.Write([]byte("Content-Length: " + fmt.Sprint(len(file)) + "\r\n\r\n"))
 
+		conn.Write(file)
+
 		return
 	}
 
