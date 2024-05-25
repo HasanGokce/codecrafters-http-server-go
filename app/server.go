@@ -81,7 +81,7 @@ func handleConnection(conn net.Conn) {
 		}
 		conn.Write([]byte("Content-Length: " + fmt.Sprint(len(secondPath)) + "\r\n\r\n"))
 
-		body := rawRequest[strings.Index(rawRequest, "\r\n\r\n")+4:]
+		body := rawRequest[strings.Index(rawRequest, "\r\n\r\n")+3:]
 		fmt.Println("bıdy: " + body)
 		bodyBuffer := []byte(body)
 
