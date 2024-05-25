@@ -84,7 +84,7 @@ func handleConnection(conn net.Conn) {
 		body := strings.Split(rawRequest, "\r\n\r\n")[1]
 		fmt.Println("bıdy: " + body)
 
-		echo := strings.TrimPrefix(path, "/echo/") + "\r\n"
+		echo := strings.TrimPrefix(path, "/echo/")
 		bodyBuffer := []byte(echo)
 
 		fmt.Println("bodyBuffer: " + string(bodyBuffer))
