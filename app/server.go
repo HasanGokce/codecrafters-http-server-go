@@ -74,9 +74,9 @@ func handleConnection(conn net.Conn) {
 		return
 	}
 
+	fmt.Println("POST")
+	fmt.Println(splittedPath)
 	if strings.HasPrefix(path, "/files") && splittedPath[1] == "POST" {
-		fmt.Println("POST")
-		fmt.Println(splittedPath)
 
 		fileName := splittedPath[2]
 		directory := os.Args[2]
