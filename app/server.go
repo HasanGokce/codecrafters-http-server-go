@@ -96,7 +96,7 @@ func handleConnection(conn net.Conn) {
 
 		conn.Write([]byte("HTTP/1.1 201 Created\r\n"))
 		conn.Write([]byte("Content-Type: text/plain\r\n"))
-		conn.Write([]byte("Content-Length: " + fmt.Sprint(len(rawRequest)) + "\r\n\r\n"))
+		conn.Write([]byte("Content-Length: " + fmt.Sprint(len(body)) + "\r\n\r\n"))
 		conn.Write([]byte(body))
 
 		return
