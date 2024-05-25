@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"compress/gzip"
+	"fmt"
 )
 
 func GzipCompress(text string) string {
@@ -11,6 +12,6 @@ func GzipCompress(text string) string {
 	writer.Write([]byte(text))
 	writer.Close()
 	resultString := buffer.String()
-	fmt
+	fmt.Println("Compressed: " + resultString)
 	return resultString
 }
