@@ -308,7 +308,7 @@ func handleGetFiles(req *Request, res *Response) {
 	// Read the content of the file
 	file, err := os.Open(directory + fileName)
 	if err != nil {
-		fmt.Println("Error reading file: ", err.Error())
+		fmt.Println("Error reading filea: ", err.Error())
 		res.StatusCode = 404
 		res.Headers["Content-Type"] = "text/plain"
 		res.Body = "Error reading file"
@@ -318,7 +318,7 @@ func handleGetFiles(req *Request, res *Response) {
 	osFileToSting := bufio.NewReader(file)
 	fileContent, err := osFileToSting.ReadString('\n')
 	if err != nil {
-		fmt.Println("Error reading file: ", err.Error())
+		fmt.Println("Error reading fileb: ", err.Error())
 		res.StatusCode = 404
 		res.Headers["Content-Type"] = "text/plain"
 		res.Body = "Error reading file"
