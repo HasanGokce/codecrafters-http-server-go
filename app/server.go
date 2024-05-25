@@ -46,7 +46,7 @@ func main() {
 
 	fmt.Println(secondPath)
 
-	conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
+	conn.Write([]byte("HTTP/1.1 200 OK\r\n"))
 	conn.Write([]byte("Content-Type: text/plain\r\n\r\n"))
 	conn.Write([]byte("Content-Length: " + fmt.Sprint(len(secondPath)) + "\r\n\r\n"))
 	conn.Write([]byte(secondPath))
