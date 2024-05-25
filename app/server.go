@@ -268,6 +268,7 @@ func handleFiles(req *Request, res *Response) {
 	// Write the content to a file
 	file, err := os.Create("/Users/smallsteps/cc/codecrafters-http-server-go/abc.txt")
 	if err != nil {
+		fmt.Println("Error creating file: ", err.Error())
 		res.StatusCode = 500
 		res.Headers["Content-Type"] = "text/plain"
 		res.Body = "Error creating file"
