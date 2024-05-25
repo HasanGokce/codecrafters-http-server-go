@@ -181,7 +181,7 @@ func matchRoute(route, path string, params map[string]string) bool {
 // writeResponse function to send HTTP response
 func (app *App) writeResponse(conn net.Conn, response *Response) {
 	statusText := "OK"
-	if response.StatusCode != 200 || response.StatusCode != 201 {
+	if response.StatusCode != 200 && response.StatusCode != 201 {
 		statusText = "Not Found"
 	}
 
