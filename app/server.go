@@ -42,7 +42,7 @@ func main() {
 
 	splittedPath := strings.Split(path, "/")
 
-	fmt.Println(path)
+	fmt.Println(splittedPath)
 
 	fmt.Println(len(splittedPath))
 
