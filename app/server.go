@@ -236,7 +236,7 @@ func handleEcho(req *Request, res *Response) {
 	res.StatusCode = 200
 	res.Headers["Content-Type"] = "text/plain"
 	// Check if any compression is required
-	if req.Headers["Accept-Encoding"] == "gzip" {
+	if req.Headers["Accept-Encoding"] == "gzip" || req.Headers["accept-encoding"] != "" {
 		// Compress the response body
 		res.Body = GzipCompress(id)
 		res.Headers["Content-Encoding"] = "gzip"
