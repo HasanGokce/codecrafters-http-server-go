@@ -93,12 +93,12 @@ func handleConnection(conn net.Conn) {
 
 			buffer := new(bytes.Buffer)
 			writer := gzip.NewWriter(buffer)
+			defer writer.Close()
 			writer.Close()
 			writer.Write(bodyBuffer)
 			bytes := buffer.Bytes()
 			fmt.Println(bytes)
 			conn.Write(bytes)
-			fmt.Println("Compressed")
 			return
 		} else {
 			conn.Write([]byte(secondPath))
