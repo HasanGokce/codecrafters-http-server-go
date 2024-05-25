@@ -74,11 +74,33 @@ func handleConnection(conn net.Conn) {
 		return
 	}
 
+	if strings.HasPrefix(path, "/files/") && splittedPath[1] == "POST" {
+		fileName := splittedPath[2]
+		directory := os.Args[2]
+
+		file, err := os.Create(directory + fileName)
+		if err != nil {
+			conn.Write([]byte("HTTP/1.1 500 Internal Server Error\r\n\r\n"))
+			return
+		}
+
+		file.Write([]byte(rawRequest))
+		file.Close()
+
+		conn.Write([]byte("HTTP/1.1 200 OK\r\n"))
+		conn.Write([]byte("Content-Type: text/plain\r\n"))
+		conn.Write([]byte("Content-Length: " + fmt.Sprint(len(rawRequest)) + "\r\n\r\n"))
+		conn.Write([]byte(rawRequest))
+
+		return
+	}
+
 	if strings.HasPrefix(path, "/files/") {
 		fileName := splittedPath[2]
 		directory := os.Args[2]
 
 		file, err := os.ReadFile(directory + fileName)
+		conn.Write(file)
 		if err != nil {
 			conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
 			return
