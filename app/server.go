@@ -265,6 +265,8 @@ func handleFiles(req *Request, res *Response) {
 	fmt.Println("Directory: ", directory)
 	fmt.Println("Filename: ", fileName)
 
+	fmt.Println("content: ", req.Body)
+
 	// Write the content to a file
 	file, err := os.Create(directory + fileName)
 	if err != nil {
