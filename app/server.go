@@ -245,12 +245,13 @@ func main() {
 
 // handleHome function to handle / route
 func handleHome(req *Request, res *Response) {
-	two := req.Params["two"]
+
+	userAgent := req.Headers["User-Agent"]
 
 	res.StatusCode = 200
 	res.Headers["Content-Type"] = "text/plain"
-	res.Headers["Content-Length"] = fmt.Sprintf("%d", len(two))
-	res.Body = two
+	res.Headers["Content-Length"] = fmt.Sprintf("%d", len(userAgent))
+	res.Body = userAgent
 }
 
 // handleProductList function to handle /productlist route
