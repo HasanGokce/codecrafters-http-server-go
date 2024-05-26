@@ -250,7 +250,7 @@ func handleHome(req *Request, res *Response) {
 	res.StatusCode = 200
 	res.Headers["Content-Type"] = "text/plain"
 	res.Headers["Content-Length"] = fmt.Sprintf("%d", len(two))
-	res.Body = "Home"
+	res.Body = two
 }
 
 // handleProductList function to handle /productlist route
