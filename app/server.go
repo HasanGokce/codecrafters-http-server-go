@@ -235,6 +235,7 @@ func main() {
 	app.get("/productlist", handleProductList)
 	app.get("/productlist/apple", handleApple)
 	app.post("/echo/:id", handleEcho)
+	app.get("/echo/:id", handleEcho)
 	app.post("/files/:content", handleFiles)
 	app.get("/files/:content", handleGetFiles)
 	app.get(":one/:two", handleHome)
@@ -271,6 +272,10 @@ func handleApple(req *Request, res *Response) {
 // handleEcho function to handle /echo/:id route
 func handleEcho(req *Request, res *Response) {
 	id := req.Params["id"]
+
+	userAgent := req.Headers["User-Agent"]
+
+	fmt.Printf(userAgent)
 
 	res.StatusCode = 200
 	res.Headers["Content-Type"] = "text/plain"
