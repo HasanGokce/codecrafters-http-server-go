@@ -315,8 +315,10 @@ func handleGetFiles(req *Request, res *Response) {
 		return
 	}
 
-	createBody := make([]byte, 1024)
-	_, err = file.Read(createBody)
+	createBody := bufio.NewReader(file)
+	createBodySize, _ := file.Stat()
+	createdBody := make([]byte, createBodySize.Size())
+	_, err = createBody.Read(createdBody)
 	if err != nil {
 		fmt.Println("Error reading file: ", err.Error())
 		res.StatusCode = 500
@@ -326,10 +328,9 @@ func handleGetFiles(req *Request, res *Response) {
 	}
 
 	// Write the content to the response body
-	createdBody := string(createBody)
 
 	res.StatusCode = 200
 	res.Headers["Content-Type"] = "application/octet-stream"
 	res.Headers["Content-Length"] = fmt.Sprintf("%d", len(createdBody))
-	res.Body = createdBody
+	res.Body = string(createdBody)
 }
