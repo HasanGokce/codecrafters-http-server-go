@@ -246,6 +246,11 @@ func main() {
 // handleHome function to handle / route
 func handleHome(req *Request, res *Response) {
 
+	one := req.Params["one"]
+	two := req.Params["two"]
+	fmt.Println(one)
+	fmt.Println(two)
+
 	userAgent := req.Headers["User-Agent"]
 
 	res.StatusCode = 200
