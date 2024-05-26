@@ -285,7 +285,7 @@ func handleEcho(req *Request, res *Response) {
 		fmt.Println("One")
 	} else {
 		fmt.Println("Two")
-		res.Headers["Content-Length"] = fmt.Sprintf("%d", len(res.Body))
+		res.Headers["Content-Length"] = fmt.Sprintf("%d", len(id))
 		res.Body = fmt.Sprintf("Echo ID: %s", id)
 	}
 }
