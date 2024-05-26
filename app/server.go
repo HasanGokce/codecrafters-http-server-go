@@ -239,6 +239,7 @@ func main() {
 	app.post("/files/:content", handleFiles)
 	app.get("/files/:content", handleGetFiles)
 	app.get("/:one/:two", handleHome)
+	app.get("user-agent", handleUserAgent)
 
 	select {}
 }
@@ -262,6 +263,16 @@ func handleHome(req *Request, res *Response) {
 		res.Headers["Content-Length"] = fmt.Sprintf("%d", len(res.Body))
 	}
 
+	res.Body = userAgent
+}
+
+// handleUserAgent function to handle /user-agent route
+func handleUserAgent(req *Request, res *Response) {
+	userAgent := req.Headers["User-Agent"]
+
+	res.StatusCode = 200
+	res.Headers["Content-Type"] = "text/plain"
+	res.Headers["Content-Length"] = fmt.Sprintf("%d", len(userAgent))
 	res.Body = userAgent
 }
 
