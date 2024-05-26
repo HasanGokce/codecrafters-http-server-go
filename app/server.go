@@ -256,7 +256,12 @@ func handleHome(req *Request, res *Response) {
 	res.StatusCode = 200
 	res.Headers["Content-Type"] = "text/plain"
 	res.Headers["Content-Length"] = fmt.Sprintf("%d", len(userAgent))
-	res.Headers["Content-Encoding"] = "gzip"
+
+	if strings.Contains(req.Headers["Accept-Encoding"], "gzip") {
+		res.Body = GzipCompress(userAgent)
+		res.Headers["Content-Length"] = fmt.Sprintf("%d", len(res.Body))
+	}
+
 	res.Body = userAgent
 }
 
