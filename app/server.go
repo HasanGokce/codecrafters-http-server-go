@@ -247,6 +247,8 @@ func main() {
 // handleHome function to handle / route
 func handleHome(req *Request, res *Response) {
 
+	fmt.Println("@handleHome")
+
 	one := req.Params["one"]
 	two := req.Params["two"]
 	fmt.Println(one)
