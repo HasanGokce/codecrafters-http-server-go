@@ -239,7 +239,7 @@ func main() {
 	app.post("/files/:content", handleFiles)
 	app.get("/files/:content", handleGetFiles)
 	app.get("/:one/:two", handleHome)
-	app.get("user-agent", handleUserAgent)
+	app.get("/user-agent", handleUserAgent)
 
 	select {}
 }
