@@ -230,6 +230,7 @@ func main() {
 		fmt.Println("Server started at: " + port)
 	})
 
+	app.get("/", handleHome)
 	app.get("/productlist", handleProductList)
 	app.get("/productlist/apple", handleApple)
 	app.post("/echo/:id", handleEcho)
@@ -238,6 +239,13 @@ func main() {
 	app.get("/files/:content", handleGetFiles)
 
 	select {}
+}
+
+// handleHome function to handle / route
+func handleHome(req *Request, res *Response) {
+	res.StatusCode = 200
+	res.Headers["Content-Type"] = "text/plain"
+	res.Body = "Home"
 }
 
 // handleProductList function to handle /productlist route
