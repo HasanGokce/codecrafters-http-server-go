@@ -273,10 +273,6 @@ func handleApple(req *Request, res *Response) {
 func handleEcho(req *Request, res *Response) {
 	id := req.Params["id"]
 
-	userAgent := req.Headers["User-Agent"]
-
-	fmt.Printf(userAgent)
-
 	res.StatusCode = 200
 	res.Headers["Content-Type"] = "text/plain"
 	// Check if any compression is required
@@ -289,6 +285,7 @@ func handleEcho(req *Request, res *Response) {
 		fmt.Println("One")
 	} else {
 		fmt.Println("Two")
+		res.Headers["Content-Length"] = fmt.Sprintf("%d", len(res.Body))
 		res.Body = fmt.Sprintf("Echo ID: %s", id)
 	}
 }
