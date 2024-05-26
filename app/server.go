@@ -231,6 +231,7 @@ func main() {
 	})
 
 	app.get("/", handleHome)
+	app.get("/strawberry", handleHome)
 	app.get("/productlist", handleProductList)
 	app.get("/productlist/apple", handleApple)
 	app.post("/echo/:id", handleEcho)
